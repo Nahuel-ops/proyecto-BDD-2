@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class LoginController extends Controller
+{
+    public function create()
+    {
+        return view('auth.login');
+    }
+
+    public function store(Request $request)
+    {
+        $credenciales = $request->validate([
+            'email'    => ['required', 'email'],
+            'password' => ['required', 'string']
+        ], [], [
+            'password' => 'contraseña',
+        ]);
+
+        if (!Auth::attempt($credenciales, $request->boolean('recordar'))) {
+            return back()
+                ->withErrors(['email' => 'Las credenciales no son correctas.'])
+                ->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+
+
+        return redirect()->intended(route('curso.index'))
+            ->with('success', 'Bienvenido(a) ' . Auth::user()->name . '.');
+    }
+    public function destroy(Request $request)
+{
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect()->route('login');
+}
+}
