@@ -22,14 +22,17 @@
         </div>
 
         <!-- Imagen del Curso -->
-        <div class="mb-6 w-full h-64 md:h-80 bg-gray-100 rounded-lg overflow-hidden shadow-inner border border-gray-200">
-            <img
-                src="{{ $curso->imagen_url ?? asset($curso->imagen ?? 'img/curso-default.png') }}"
-                alt="Imagen del curso {{ $curso->nombre ?? $curso->name }}"
-                class="w-full h-full object-cover"
-                onerror="this.src='{{ asset('img/curso-default.png') }}';"
-            >
+               <!-- Imagen del Curso Forzada y Reparada -->
+        <div class="mb-6 w-full h-64 md:h-80 bg-gray-200 rounded-lg overflow-hidden shadow-inner border border-gray-300 flex items-center justify-center">
+           <img 
+    src="{{ $curso->imagen_url ?? ($curso->imagen ? asset('storage/' . $curso->imagen) : asset('img/curso-default.png')) }}" 
+    alt="Imagen del curso {{ $curso->nombre ?? $curso->name }}" 
+    class="w-full h-full object-cover block"
+    onerror="this.src='{{ asset('storage/img/curso-default.png') }}';"
+>
+
         </div>
+
 
         <!-- Información General -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
