@@ -6,6 +6,9 @@ use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\TurnosController;
+
+use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\InscripcionController;
 use Illuminate\Support\Facades\Route;
 
 // Redirección inicial compartida
@@ -58,5 +61,28 @@ Route::middleware(['auth', 'actividad'])->group(function () {
             ->only(['index', 'create', 'store']);
     });
 
+});
+
+
+
+
+
+Route::middleware(['auth', 'actividad'])->group(function () {
+    
+    // --- RUTAS DE ESTUDIANTES ---
+    // Listar, crear y almacenar estudiantes
+    Route::get('/estudiantes', [EstudianteController::class, 'index'])->name('estudiantes.index');
+    Route::get('/estudiantes/create', [EstudianteController::class, 'create'])->name('estudiantes.create');
+    Route::post('/estudiantes', [EstudianteController::class, 'store'])->name('estudiantes.store');
+
+    // --- RUTAS DE INSCRIPCIONES ---
+    // Formulario de inscripción y guardado (Incisos b y d)
+    Route::get('/inscripciones', [InscripcionController::class, 'index'])->name('inscripciones.index');
+    Route::get('/inscripciones/create', [InscripcionController::class, 'create'])->name('inscripciones.create');
+    Route::post('/inscripciones', [InscripcionController::class, 'store'])->name('inscripciones.store');
+    
+    // Formulario de edición y actualización de la nota (Inciso c)
+    Route::get('/inscripciones/{id}/edit', [InscripcionController::class, 'edit'])->name('inscripciones.edit');
+    Route::put('/inscripciones/{id}', [InscripcionController::class, 'update'])->name('inscripciones.update');
 });
 

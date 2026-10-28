@@ -14,17 +14,29 @@
             <a href="{{ route('home') }}" class="text-xl font-bold text-white drop-shadow-[0_0_8px_rgba(96,165,250,1)] hover:text-cyan-100">
                 @yield('header','Encabezado del sitio')
             </a>
-            <a href="{{ route('home') }}" class="text-white font-semibold px-4 py-2 rounded border border-white/70 hover:bg-white/15">
-                Volver al inicio
-            </a>
+            
+            <!-- Barra de navegación añadida con consistencia visual -->
+            <div class="flex items-center gap-3">
+                <a href="{{ route('inscripciones.index') }}" 
+                   class="text-white font-medium px-4 py-2 rounded border border-cyan-400/50 hover:bg-cyan-400/20 transition duration-150 {{ request()->routeIs('inscripciones.*') || request()->routeIs('estudiantes.*') ? 'bg-cyan-500/30 border-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.5)]' : '' }}">
+                    Estudiantes Inscritos
+                </a>
+                
+                <a href="{{ route('home') }}" class="text-white font-semibold px-4 py-2 rounded border border-white/70 hover:bg-white/15 transition duration-150">
+                    Volver al inicio
+                </a>
+            </div>
         </div>
     </header>
-        <main class="grow container mx-auto p-4 bg-white">
-            @yield('content')
-        </main>
-        <footer class="bg-gradient-to-r from-black via-blue-950 to-cyan-400 text-white text-center p-4 shadow-[0_0_25px_rgba(34,211,238,0.7)]">
-            <p>&copy; {{ date('Y') }} My Sitio Web. Todos los derechos reservados.</p>
-        </footer>
+
+    <main class="grow container mx-auto p-4 bg-white">
+        @yield('content')
+    </main>
+
+    <footer class="bg-gradient-to-r from-black via-blue-950 to-cyan-400 text-white text-center p-4 shadow-[0_0_25px_rgba(34,211,238,0.7)]">
+        <p>&copy; {{ date('Y') }} My Sitio Web. Todos los derechos reservados.</p>
+    </footer>
+
     @stack('scripts')
 </body>
 </html>
